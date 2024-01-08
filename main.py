@@ -31,11 +31,12 @@ with open("Статистика обращений.csv", 'w') as out_file:
     resetting_dictionaries()
 
     # записываем шапку таблицы
-    out_file.write(f"Произведение;Год написания;{';'.join(official_addresses.keys())};"
+    out_file.write(f"Произведение;Автор;Год написания;{';'.join(official_addresses.keys())};"
                    f"{';'.join(common_addresses.keys())};{';'.join(title_addresses.keys())}\n")
 
     for file_name in os.listdir("Литературные произведения"):
         resetting_dictionaries()
+        print(file_name)
 
         with open(f"Литературные произведения/{file_name}") as in_file:
             for line in in_file.readlines():
@@ -61,7 +62,7 @@ with open("Статистика обращений.csv", 'w') as out_file:
                 for key in common_addresses.keys():
                     common_addresses[key] += line.count(key.upper())
 
-        out_file.write(f"{file_name.split('. ')[0]};{file_name.split('. ')[2][:4]};"
+        out_file.write(f"{file_name.split('. ')[0]};{file_name.split('. ')[1]};{file_name.split('. ')[2][:4]};"
                        f"{';'.join(map(str, official_addresses.values()))};"
                        f"{';'.join(map(str, common_addresses.values()))};"
                        f"{';'.join(map(str, title_addresses.values()))}\n")
